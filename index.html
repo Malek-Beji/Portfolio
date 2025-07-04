@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malek Beji - Full-Stack Developer</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="nav-container">
-            <div class="logo">MB</div>
+        <div class="nav-container container">
+            <a href="#home" class="logo">MB</a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -21,6 +24,10 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="mode-switch">
+                <i class="fas fa-sun light-mode-icon"></i>
+                <i class="fas fa-moon dark-mode-icon"></i>
+            </div>
             <div class="hamburger">
                 <i class="fas fa-bars"></i>
             </div>
@@ -50,7 +57,7 @@
             <div class="section-title">
                 <h2>About Me</h2>
             </div>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto;">
+            <p>
                 I'm a Junior Full-Stack Developer with a passion for creating beautiful, functional, and user-friendly
                 websites.
                 I specialize in SEO optimization to enhance the visibility and performance of high-quality websites.
@@ -61,52 +68,52 @@
             <div class="section-title">
                 <h2>My Skills</h2>
             </div>
-            <div class="skills">
-                <div class="skill-card">
+            <div class="skills-grid">
+                <div class="skill-item">
                     <i class="fab fa-html5"></i>
                     <h3>HTML</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-css3-alt"></i>
                     <h3>CSS</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-js"></i>
                     <h3>JavaScript</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-react"></i>
                     <h3>React</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-php"></i>
                     <h3>PHP</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-symfony"></i>
                     <h3>Symfony</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-wordpress"></i>
                     <h3>WordPress</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-sass"></i>
                     <h3>SCSS</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fas fa-search"></i>
                     <h3>SEO</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fas fa-file-code"></i>
                     <h3>jQuery</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fab fa-gulp"></i>
                     <h3>GULP</h3>
                 </div>
-                <div class="skill-card">
+                <div class="skill-item">
                     <i class="fas fa-mobile-alt"></i>
                     <h3>Responsive</h3>
                 </div>
@@ -115,7 +122,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="section" style="background-color: #f0f4f8;">
+    <section id="experience" class="section">
         <div class="container">
             <div class="section-title">
                 <h2>Work Experience</h2>
@@ -203,7 +210,7 @@
                 <h2>My Projects</h2>
             </div>
 
-            <div class="projects">
+            <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-img">
                         <img src="roncey-pic.PNG" alt="Laboratoires Roncey Website">
@@ -270,46 +277,48 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section" style="background-color: #f0f4f8;">
+    <section id="contact" class="section">
         <div class="container">
             <div class="section-title">
                 <h2>Contact Me</h2>
             </div>
 
-            <div class="contact-form">
-                <form action="https://formspree.io/f/xjvnqzao" method="POST">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" class="form-control" required></textarea>
-                    </div>
-                    <button id='send_message' type="submit" class="btn" style="width: 100%;">Send Message</button>
-                </form>
-            </div>
+            <div class="contact-container">
+                <div class="contact-form">
+                    <form action="https://formspree.io/f/xjvnqzao" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
+                        </div>
+                        <button id='send_message' type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
 
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+216 53 695 990</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>bejimalek137@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>La Soukra, Tunisie</span>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+216 53 695 990</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>bejimalek137@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>La Soukra, Tunisie</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -330,6 +339,26 @@
     </footer>
 
     <script>
+        // Dark Mode Toggle
+        const modeSwitch = document.querySelector('.mode-switch');
+        const body = document.body;
+
+        modeSwitch.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            // Optional: Save user preference to localStorage
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Optional: Apply saved theme on page load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+        }
+
         // Toggle mobile menu
         document.querySelector('.hamburger').addEventListener('click', function () {
             document.querySelector('.nav-links').classList.toggle('active');
