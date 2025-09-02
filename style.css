@@ -320,7 +320,7 @@ header::before {
 
 /* Section Styling */
 .section {
-    padding: 6rem 0; /* Reduced padding */
+    padding: 8rem 0; /* Increased padding for better spacing */
     position: relative;
 }
 
@@ -1654,7 +1654,7 @@ body:not(.dark-mode) .footer-bottom-links a:hover {
     }
 
     .section {
-        padding: 6rem 0;
+        padding: 5rem 0;
     }
 
     .section-title h2 {
