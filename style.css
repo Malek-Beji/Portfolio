@@ -10,12 +10,19 @@
     --border-color: #30363d; /* GitHub Border */
     --shadow-color: rgba(0, 212, 170, 0.15); /* Teal glow */
 
-    /* Light mode colors (for contrast) */
+    /* Light mode colors */
     --light-bg-color: #ffffff;
     --light-text-color: #24292f;
     --light-card-background: #f6f8fa;
     --light-border-color: #d0d7de;
     --light-shadow-color: rgba(0, 0, 0, 0.08);
+
+    /* Dark mode colors */
+    --dark-bg-color: #161b22;
+    --dark-text-color: #f0f6fc;
+    --dark-card-background: #21262d;
+    --dark-border-color: #30363d;
+    --dark-shadow-color: rgba(0, 212, 170, 0.15);
 }
 
 * {
@@ -26,8 +33,8 @@
 }
 
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background-color: var(--light-bg-color);
+    color: var(--light-text-color);
     line-height: 1.6;
     font-size: 1rem;
     transition: background-color 0.5s, color 0.5s;
@@ -89,6 +96,29 @@ nav {
     z-index: 1000;
     box-shadow: 0 4px 15px var(--shadow-color); /* Slightly larger shadow */
     padding: 1rem 0;
+    transition: background-color 0.5s;
+}
+
+body:not(.dark-mode) nav {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body:not(.dark-mode) .logo {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .nav-links a {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .hamburger {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .mode-switch {
+    color: var(--light-text-color);
 }
 
 .nav-container {
@@ -180,6 +210,12 @@ header {
     padding-top: 80px;
     position: relative;
     overflow: hidden;
+    transition: background 0.5s;
+}
+
+body:not(.dark-mode) header {
+    background: linear-gradient(to right, var(--light-bg-color), #e8f4fd);
+    color: var(--light-text-color);
 }
 
 header::before {
@@ -289,7 +325,7 @@ header::before {
 }
 
 .section:nth-child(even) {
-    background-color: var(--background-color);
+    background-color: var(--light-bg-color);
 }
 
 .section-title {
@@ -688,6 +724,14 @@ textarea.form-control {
     gap: 0.5rem;
     color: var(--text-color);
     font-size: 1rem;
+}
+
+body:not(.dark-mode) .cv-contact-info p {
+    color: var(--primary-color);
+}
+
+body:not(.dark-mode) .cv-contact-info i {
+    color: var(--secondary-color);
 }
 
 .cv-contact-info i {
@@ -1230,6 +1274,358 @@ body.dark-mode .social-links a:hover {
     color: var(--accent-color);
 }
 
+/* CV Section Dark Mode */
+body.dark-mode .cv-container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border: 2px solid var(--secondary-color);
+}
+
+body.dark-mode .cv-contact h1 {
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .cv-contact h2 {
+    color: var(--accent-color);
+}
+
+body.dark-mode .cv-section-title {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .cv-section p {
+    color: #e8e8e8;
+}
+
+body.dark-mode .cv-experience-item,
+body.dark-mode .cv-education-item {
+    background-color: var(--dark-card-background);
+    border-left: 4px solid var(--secondary-color);
+}
+
+body.dark-mode .cv-experience-header h4,
+body.dark-mode .cv-education-header h4 {
+    color: var(--dark-text-color);
+}
+
+body.dark-mode .cv-experience-item li {
+    color: #e8e8e8;
+}
+
+body.dark-mode .cv-language-item {
+    background-color: var(--dark-card-background);
+    border: 1px solid var(--dark-border-color);
+}
+
+body.dark-mode .language-name {
+    color: var(--dark-text-color);
+}
+
+body.dark-mode .cv-portfolio-links a {
+    background-color: var(--dark-card-background);
+    color: var(--accent-color);
+    border: 1px solid var(--dark-border-color);
+}
+
+body.dark-mode .cv-portfolio-links a:hover {
+    background-color: var(--accent-color);
+    color: var(--dark-bg-color);
+}
+
+body.dark-mode .cv-skill-category {
+    background-color: var(--dark-card-background);
+    border: 1px solid var(--dark-border-color);
+}
+
+body.dark-mode .cv-skill-category h5 {
+    color: var(--dark-text-color);
+}
+
+body.dark-mode .cv-skill-category li {
+    color: #e8e8e8;
+    border-bottom: 1px solid var(--dark-border-color);
+}
+
+/* Light Mode Styles */
+body:not(.dark-mode) {
+    background-color: var(--light-bg-color);
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .section:nth-child(even) {
+    background-color: var(--light-bg-color);
+}
+
+body:not(.dark-mode) .section-title h2 {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .section-title h2::after {
+    background-color: var(--secondary-color);
+}
+
+body:not(.dark-mode) .skill-item h3 {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .skill-item i {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) .card-background,
+body:not(.dark-mode) .timeline-content,
+body:not(.dark-mode) .project-card,
+body:not(.dark-mode) .contact-form,
+body:not(.dark-mode) .contact-info {
+    background-color: var(--light-card-background);
+    box-shadow: 0 5px 15px var(--light-shadow-color);
+    transition: all 0.3s ease-in-out;
+}
+
+body:not(.dark-mode) .timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--light-shadow-color);
+}
+
+body:not(.dark-mode) .timeline-content h3,
+body:not(.dark-mode) .project-info h3,
+body:not(.dark-mode) .form-group label {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .timeline-content h4 {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) .timeline-content p,
+body:not(.dark-mode) .timeline-content ul,
+body:not(.dark-mode) .project-info p,
+body:not(.dark-mode) .contact-item {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .timeline-item::after {
+    background-color: var(--light-card-background);
+    border-color: var(--secondary-color);
+}
+
+body:not(.dark-mode) .tag {
+    background-color: var(--light-bg-color);
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .project-links a {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .project-links a:hover {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) .form-control {
+    background-color: var(--light-bg-color);
+    color: var(--light-text-color);
+    border: 1px solid var(--light-border-color);
+    padding: 1.1rem;
+}
+
+body:not(.dark-mode) .form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px rgba(78, 205, 196, 0.3);
+}
+
+body:not(.dark-mode) .contact-item i {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) footer {
+    background-color: var(--light-bg-color);
+}
+
+body:not(.dark-mode) footer p {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+body:not(.dark-mode) .social-links a {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .social-links a:hover {
+    color: var(--accent-color);
+}
+
+/* CV Section Light Mode */
+body:not(.dark-mode) .cv-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+    border: 2px solid var(--secondary-color);
+}
+
+body:not(.dark-mode) .cv-contact h1 {
+    color: var(--light-text-color);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body:not(.dark-mode) .cv-contact h2 {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) .cv-section-title {
+    color: var(--light-text-color);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+body:not(.dark-mode) .cv-section p {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .cv-experience-item,
+body:not(.dark-mode) .cv-education-item {
+    background-color: var(--light-card-background);
+    border-left: 4px solid var(--secondary-color);
+}
+
+body:not(.dark-mode) .cv-experience-header h4,
+body:not(.dark-mode) .cv-education-header h4 {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .cv-experience-item li {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .cv-language-item {
+    background-color: var(--light-card-background);
+    border: 1px solid var(--light-border-color);
+}
+
+body:not(.dark-mode) .language-name {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .cv-portfolio-links a {
+    background-color: var(--light-card-background);
+    color: var(--accent-color);
+    border: 1px solid var(--light-border-color);
+}
+
+body:not(.dark-mode) .cv-portfolio-links a:hover {
+    background-color: var(--accent-color);
+    color: var(--light-bg-color);
+}
+
+body:not(.dark-mode) .cv-skill-category {
+    background-color: var(--light-card-background);
+    border: 1px solid var(--light-border-color);
+}
+
+body:not(.dark-mode) .cv-skill-category h5 {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .cv-skill-category li {
+    color: var(--light-text-color);
+    border-bottom: 1px solid var(--light-border-color);
+}
+
+/* Footer Light Mode */
+body:not(.dark-mode) footer {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) footer::before {
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color), var(--secondary-color));
+}
+
+body:not(.dark-mode) .footer-section h3 {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) .footer-section h3::after {
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+}
+
+body:not(.dark-mode) .footer-section p {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .footer-contact p {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .footer-contact i {
+    color: var(--secondary-color);
+}
+
+body:not(.dark-mode) .footer-links a {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .footer-links a::before {
+    color: var(--secondary-color);
+}
+
+body:not(.dark-mode) .footer-links a:hover {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) .footer-links a:hover::before {
+    color: var(--accent-color);
+}
+
+body:not(.dark-mode) .tech-badge {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--accent-color);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+body:not(.dark-mode) .tech-badge:hover {
+    background: var(--accent-color);
+    color: var(--light-bg-color);
+}
+
+body:not(.dark-mode) .social-links a {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--light-text-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body:not(.dark-mode) .social-links a:hover {
+    background: var(--accent-color);
+    color: var(--light-bg-color);
+}
+
+body:not(.dark-mode) .footer-newsletter p {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .footer-btn {
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    color: var(--light-bg-color);
+}
+
+body:not(.dark-mode) .footer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
+}
+
+body:not(.dark-mode) .footer-bottom {
+    border-top: 1px solid var(--light-border-color);
+}
+
+body:not(.dark-mode) .footer-bottom p {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .footer-bottom-links a {
+    color: var(--light-text-color);
+}
+
+body:not(.dark-mode) .footer-bottom-links a:hover {
+    color: var(--accent-color);
+}
+
 
 /* Responsive Styles */
 @media (max-width: 992px) {
@@ -1314,6 +1710,12 @@ body.dark-mode .social-links a:hover {
         align-items: center;
         padding-top: 2rem;
         transition: left 0.3s ease-in-out;
+        z-index: 999;
+    }
+
+    body:not(.dark-mode) .nav-links {
+        background-color: var(--light-bg-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
 
     .nav-links.active {
@@ -1324,8 +1726,14 @@ body.dark-mode .social-links a:hover {
         margin: 1.5rem 0;
     }
 
+    body:not(.dark-mode) .nav-links a {
+        color: var(--light-text-color);
+    }
+
     .hamburger {
         display: block;
+        cursor: pointer;
+        z-index: 1001;
     }
 
     .mode-switch {
