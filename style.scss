@@ -1,0 +1,42 @@
+@use 'variables';
+@use 'base';
+@use 'navigation';
+@use 'header';
+@use 'sections';
+@use 'footer';
+@use 'responsive';
+
+:root {
+    --primary-color: #{variables.$primary-color};
+    --primary-color-light: #{variables.$primary-color-light};
+    --secondary-color: #{variables.$secondary-color};
+    --text-color: #{variables.$text-color};
+    --background-color: #{variables.$background-color};
+    --background-color-darker: #{variables.$background-color-darker};
+    --border-color: #{variables.$border-color};
+    --card-background: #{variables.$card-background};
+}
+
+body {
+    font-family: variables.$font-family-primary;
+    font-size: variables.$base-font-size;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+    --text-color: #{variables.$text-color-dark-mode};
+    --background-color: #{variables.$background-color-dark-mode};
+    --background-color-darker: #{variables.$background-color-darker};
+    --card-background: #{variables.$card-background-dark-mode};
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 variables.$spacing-unit;
+}

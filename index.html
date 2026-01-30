@@ -1,453 +1,1435 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malek Beji - Full-Stack Developer</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <title>Malek Beji — Full-Stack Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --clr-bg: #0a0a0a;
+            --clr-surface: #141414;
+            --clr-border: #2a2a2a;
+            --clr-text: #e8e8e8;
+            --clr-text-muted: #8a8a8a;
+            --clr-accent: #00ff88;
+            --clr-accent-dim: #00cc6a;
+            --clr-highlight: #ff6b35;
+            --clr-highlight-dim: #cc5529;
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background: var(--clr-accent);
+            color: var(--clr-bg);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--clr-bg);
+            color: var(--clr-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Cursor */
+        body {
+            cursor: none;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--clr-accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--clr-accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.1s ease;
+            opacity: 0;
+        }
+
+        a, button {
+            cursor: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--clr-bg) 0%, transparent 100%);
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.8s var(--ease-smooth);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--clr-text);
+            text-decoration: none;
+            letter-spacing: -0.03em;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--clr-accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--clr-text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--clr-accent);
+            transition: width 0.4s var(--ease-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--clr-accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-toggle {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--clr-text-muted);
+            background: transparent;
+            border: 1px solid var(--clr-border);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            border-color: var(--clr-accent);
+            color: var(--clr-accent);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--clr-text);
+            font-size: 1.5rem;
+            cursor: none;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--clr-surface);
+            border-left: 1px solid var(--clr-border);
+            padding: 6rem 3rem 3rem;
+            z-index: 999;
+            transition: right 0.4s var(--ease-smooth);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: transparent;
+            border: none;
+            color: var(--clr-text);
+            font-size: 2rem;
+            cursor: none;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .mobile-nav-links a {
+            font-size: 1.5rem;
+            color: var(--clr-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-links a:hover {
+            color: var(--clr-accent);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s var(--ease-smooth);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--clr-accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            display: inline-block;
+            animation: fadeInUp 1s 0.2s var(--ease-smooth) backwards;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.04em;
+            animation: fadeInUp 1s 0.3s var(--ease-smooth) backwards;
+        }
+
+        .hero h1 .highlight {
+            color: var(--clr-accent);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--clr-text-muted);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            max-width: 600px;
+            animation: fadeInUp 1s 0.4s var(--ease-smooth) backwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s 0.5s var(--ease-smooth) backwards;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--clr-accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--clr-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 1s 0.6s var(--ease-smooth) backwards;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: var(--clr-accent);
+            color: var(--clr-bg);
+            border: 2px solid var(--clr-accent);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--clr-accent-dim);
+            transition: left 0.4s var(--ease-smooth);
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--clr-text);
+            border: 2px solid var(--clr-border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--clr-accent);
+            color: var(--clr-accent);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Image */
+        .hero-image {
+            position: relative;
+            animation: fadeInUp 1s 0.7s var(--ease-smooth) backwards;
+        }
+
+        .image-container {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            border: 1px solid var(--clr-border);
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: transform 0.6s var(--ease-smooth), filter 0.6s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating-badge .badge-label {
+            font-size: 0.75rem;
+            color: var(--clr-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-badge .badge-value {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--clr-accent);
+        }
+
+        /* Section Base */
+        section {
+            padding: 8rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-smooth);
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--clr-accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            max-width: 800px;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .about-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-smooth);
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--clr-text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .about-text p:first-child {
+            font-size: 1.4rem;
+            color: var(--clr-text);
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 0.5rem;
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        .skill-item:hover {
+            border-color: var(--clr-accent);
+            transform: translateX(8px);
+        }
+
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--clr-bg);
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            color: var(--clr-text);
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--clr-accent) 0%, var(--clr-border) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 1rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s var(--ease-smooth);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.75rem;
+            top: 2rem;
+            width: 16px;
+            height: 16px;
+            background: var(--clr-accent);
+            border: 3px solid var(--clr-bg);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--clr-surface);
+        }
+
+        .timeline-item:hover {
+            border-color: var(--clr-accent);
+            transform: translateX(10px);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--clr-accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-company {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-role {
+            font-size: 1.1rem;
+            color: var(--clr-text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-description {
+            color: var(--clr-text-muted);
+            line-height: 1.7;
+        }
+
+        .timeline-description ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .timeline-description li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-description li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--clr-accent);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s var(--ease-smooth);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            border-color: var(--clr-accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.1);
+        }
+
+        .project-image {
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            background: var(--clr-bg);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--ease-smooth);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-link {
+            color: var(--clr-accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--clr-text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--clr-bg);
+            border: 1px solid var(--clr-border);
+            border-radius: 2rem;
+            color: var(--clr-text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--clr-accent);
+            color: var(--clr-accent);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-smooth);
+        }
+
+        .contact-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 0.5rem;
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        .contact-item:hover {
+            border-color: var(--clr-accent);
+            transform: translateX(8px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--clr-bg);
+            border-radius: 0.5rem;
+            font-size: 1.3rem;
+            color: var(--clr-accent);
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.85rem;
+            color: var(--clr-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-value {
+            font-size: 1.1rem;
+            color: var(--clr-text);
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 0.5rem;
+            color: var(--clr-text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        .social-link:hover {
+            border-color: var(--clr-accent);
+            color: var(--clr-accent);
+            transform: translateY(-4px);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s 0.2s var(--ease-smooth);
+        }
+
+        .contact-form.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--clr-text);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: 0.5rem;
+            color: var(--clr-text);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--clr-accent);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--clr-surface);
+            border-top: 1px solid var(--clr-border);
+            padding: 4rem 4rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            color: var(--clr-text-muted);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--clr-text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--clr-accent);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--clr-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--clr-text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 7rem 2rem 3rem;
+                min-height: auto;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.1;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 5rem 2rem;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .skills-list {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -2.75rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--clr-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--clr-border);
+            border-top-color: var(--clr-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--clr-accent);
+            z-index: 9999;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.1s ease;
+        }
+    </style>
+</head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
     <!-- Navigation -->
     <nav>
-        <div class="nav-container container">
-            <a href="#home" class="logo">MB</a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#cv">CV</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="mode-switch">
-                <i class="fas fa-sun light-mode-icon"></i>
-                <i class="fas fa-moon dark-mode-icon"></i>
-            </div>
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
+        <a href="#home" class="logo">MB</a>
+        <ul class="nav-links">
+            <li><a href="#about" data-translate="nav-about">About</a></li>
+            <li><a href="#experience" data-translate="nav-experience">Experience</a></li>
+            <li><a href="#projects" data-translate="nav-projects">Projects</a></li>
+            <li><a href="#contact" data-translate="nav-contact">Contact</a></li>
+        </ul>
+        <button class="lang-toggle" onclick="toggleLanguage()">EN / FR</button>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
     </nav>
 
-    <!-- Header Section -->
-    <header id="home">
-        <div class="container header-content">
-            <div class="header-text">
-                <h1>Malek Beji</h1>
-                <h2><span class="typing">Junior Full-Stack Developer</span></h2>
-                <p>As a web developer and integrator, I have expertise in HTML, CSS, JavaScript, jQuery, PHP, WordPress,
-                    GULP, SCSS, and React for front-end interfaces. My skills extend to creating fully manageable
-                    websites using WordPress and ACF Pro.</p>
-                <a href="#contact" class="btn">Contact Me</a>
+    <!-- Mobile Menu -->
+    <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
+    <div class="mobile-menu">
+        <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
+        <ul class="mobile-nav-links">
+            <li><a href="#about" data-translate="nav-about" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="#experience" data-translate="nav-experience" onclick="closeMobileMenu()">Experience</a></li>
+            <li><a href="#projects" data-translate="nav-projects" onclick="closeMobileMenu()">Projects</a></li>
+            <li><a href="#contact" data-translate="nav-contact" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <span class="hero-label" data-translate="hero-label">Full-Stack Web Developer</span>
+                <h1 data-translate="hero-title">Crafting Digital <span class="highlight">Experiences</span> That Matter</h1>
+                <p class="hero-subtitle" data-translate="hero-subtitle">Transforming ideas into elegant, high-performance web solutions with precision and creativity.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Years Exp</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                </div>
+
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary" data-translate="cta-hire">Hire Me</a>
+                    <a href="#projects" class="btn btn-secondary" data-translate="cta-projects">View Projects</a>
+                </div>
             </div>
-            <div class="profile-img">
-                <img src="malek-pic.jpeg" alt="Malek Beji">
-            </div>
-        </div>
-    </header>
 
-    <!-- CV/Resume Section -->
-    <section id="cv" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>My CV</h2>
-            </div>
-
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <a href="cv_malek_beji-eng-ats.pdf" target="_blank" download class="btn">Download CV</a>
-            </div>
-
-            <div class="cv-container">
-                <!-- Header -->
-                <div class="cv-header">
-                    <div class="cv-contact">
-                        <h1>Malek Beji</h1>
-                        <h2>FULL-STACK WEB DEVELOPER</h2>
-                        <div class="cv-contact-info">
-                            <p><i class="fas fa-envelope"></i> bejimalek137@gmail.com</p>
-                            <p><i class="fas fa-phone"></i> +216 53 695 990</p>
-                        </div>
-                    </div>
+            <div class="hero-image">
+                <div class="image-container">
+                    <img src="img-1.jpeg" alt="Malek Beji">
                 </div>
-
-                <!-- Profile -->
-                <div class="cv-section">
-                    <h3 class="cv-section-title"><i class="fas fa-user"></i> Profile</h3>
-                    <p>Full-Stack Web Developer with strong expertise in front-end technologies (HTML, CSS, JavaScript) and solid experience in React. I also work on the back-end using PHP and frameworks like Symfony. Passionate about building modern, high-performance, and dynamic web interfaces, I convert designs (Figma, PSD, AI) into functional websites. I also develop fully customized WordPress themes using ACF Pro.</p>
-                </div>
-
-                <!-- Experience -->
-                <div class="cv-section">
-                    <h3 class="cv-section-title"><i class="fas fa-briefcase"></i> Experience</h3>
-
-                    <div class="cv-experience-item">
-                        <div class="cv-experience-header">
-                            <h4>AI DRAGONFLY – FULL-STACK DEVELOPER</h4>
-                            <span class="cv-date">DECEMBER 2024 – MARCH 2025</span>
-                        </div>
-                        <ul>
-                            <li>Built and integrated AI-based web features</li>
-                            <li>Developed dynamic interfaces with React</li>
-                            <li>Collaborated on internal innovation projects</li>
-                        </ul>
-                    </div>
-
-                    <div class="cv-experience-item">
-                        <div class="cv-experience-header">
-                            <h4>LIGHT MY WEB – WEB DEVELOPER / INTEGRATOR</h4>
-                            <span class="cv-date">APRIL 2024 – JUNE 2024</span>
-                        </div>
-                        <ul>
-                            <li>Developed interfaces using React</li>
-                            <li>Developed APIs and backend services using Symfony</li>
-                            <li>Participated in full project cycles</li>
-                        </ul>
-                    </div>
-
-                    <div class="cv-experience-item">
-                        <div class="cv-experience-header">
-                            <h4>LIGHT MY WEB – WEB DEVELOPER / INTEGRATOR</h4>
-                            <span class="cv-date">SEPTEMBER 2023 – DECEMBER 2023</span>
-                        </div>
-                        <ul>
-                            <li>Integrated designs from Figma, AI, PSD</li>
-                            <li>Built fully custom WordPress themes</li>
-                            <li>SEO optimization and performance tuning</li>
-                        </ul>
-                    </div>
-
-                    <div class="cv-experience-item">
-                        <div class="cv-experience-header">
-                            <h4>APPWEB PLUS – WEB DEVELOPER / INTEGRATOR</h4>
-                            <span class="cv-date">JUNE 2023 – SEPTEMBER 2023</span>
-                        </div>
-                        <ul>
-                            <li>Built custom WordPress sites</li>
-                            <li>Developed and applied SEO strategies</li>
-                            <li>High-quality front-end development</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Languages -->
-                <div class="cv-section">
-                    <h3 class="cv-section-title"><i class="fas fa-language"></i> Languages</h3>
-                    <div class="cv-languages">
-                        <div class="cv-language-item">
-                            <span class="language-name">Arabic</span>
-                            <span class="language-level">Native</span>
-                        </div>
-                        <div class="cv-language-item">
-                            <span class="language-name">French</span>
-                            <span class="language-level">Native</span>
-                        </div>
-                        <div class="cv-language-item">
-                            <span class="language-name">English</span>
-                            <span class="language-level">Professional</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Education -->
-                <div class="cv-section">
-                    <h3 class="cv-section-title"><i class="fas fa-graduation-cap"></i> Education</h3>
-
-                    <div class="cv-education-item">
-                        <div class="cv-education-header">
-                            <h4>ADVANCED TECHNICIAN CERTIFICATE (BTS) IN MARKETING AND MULTIMEDIA</h4>
-                            <span class="cv-date">2022 - 2025</span>
-                        </div>
-                    </div>
-
-                    <div class="cv-education-item">
-                        <div class="cv-education-header">
-                            <h4>HIGH SCHOOL DIPLOMA (BACCALAURÉAT) IN ECONOMICS AND MANAGEMENT</h4>
-                            <span class="cv-date">2018 - 2022</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Portfolio -->
-                <div class="cv-section">
-                    <h3 class="cv-section-title"><i class="fas fa-folder-open"></i> Portfolio</h3>
-                    <div class="cv-portfolio-links">
-                        <a href="https://www.lightpinkcare.com/" target="_blank">lightpinkcare.com</a>
-                        <a href="https://laboratoires-roncey.com/" target="_blank">laboratoires-roncey.com</a>
-                        <a href="https://gintzburger.com/" target="_blank">gintzburger.com</a>
-                        <a href="https://www.joulieavocats.com/" target="_blank">joulieavocats.com</a>
-                        <a href="https://lightmyweb.fr/" target="_blank">lightmyweb.fr</a>
-                        <a href="https://mynucui.tech/login" target="_blank">mynucui.tech</a>
-                        <a href="https://ai.dragonflygroup.fr/" target="_blank">ai.dragonflygroup.fr</a>
-                    </div>
-                </div>
-
-                <!-- Skills -->
-                <div class="cv-section">
-                    <h3 class="cv-section-title"><i class="fas fa-code"></i> Skills</h3>
-                    <div class="cv-skills-grid">
-                        <div class="cv-skill-category">
-                            <h5>Front-End</h5>
-                            <ul>
-                                <li>HTML5, CSS3, JavaScript</li>
-                                <li>React.js / jQuery</li>
-                            </ul>
-                        </div>
-                        <div class="cv-skill-category">
-                            <h5>Back-End</h5>
-                            <ul>
-                                <li>PHP / Symfony</li>
-                                <li>MySQL / MongoDB</li>
-                            </ul>
-                        </div>
-                        <div class="cv-skill-category">
-                            <h5>Tools & Others</h5>
-                            <ul>
-                                <li>WordPress Development</li>
-                                <li>Git & GitHub</li>
-                                <li>API Integration / Postman</li>
-                                <li>UI/UX to Functional Code Conversion</li>
-                                <li>Testing & Debugging</li>
-                                <li>SEO Optimization</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="floating-badge">
+                    <div class="badge-label" data-translate="badge-label">Open To</div>
+                    <div class="badge-value" data-translate="badge-value">Opportunities</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Me</h2>
-            </div>
-            <p>
-                I'm a Junior Full-Stack Developer with a passion for creating beautiful, functional, and user-friendly
-                websites.
-                I specialize in SEO optimization to enhance the visibility and performance of high-quality websites.
-                With experience in both front-end and back-end development, I can build complete web solutions from
-                concept to deployment.
-            </p>
+    <section id="about">
+        <div class="section-header">
+            <div class="section-label" data-translate="about-label">Who I Am</div>
+            <h2 class="section-title" data-translate="about-title">Building the Web, One Line at a Time</h2>
+        </div>
 
-            <div class="section-title">
-                <h2>My Skills</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p data-translate="about-p1">I'm a Full-Stack Web Developer passionate about creating beautiful, functional, and user-centered digital experiences.</p>
+                <p data-translate="about-p2">With expertise spanning front-end and back-end technologies, I specialize in transforming complex ideas into elegant solutions. From responsive interfaces to robust APIs, I deliver complete web experiences that drive results.</p>
+                <p data-translate="about-p3">My approach combines technical excellence with creative problem-solving, ensuring every project not only meets requirements but exceeds expectations.</p>
+
+                <div class="skills-list">
+                    <div class="skill-item">
+                        <div class="skill-icon">⚛️</div>
+                        <div class="skill-name">React & Modern JS</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🎨</div>
+                        <div class="skill-name">UI/UX Design</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🔧</div>
+                        <div class="skill-name">PHP & Symfony</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">📱</div>
+                        <div class="skill-name">WordPress</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🗄️</div>
+                        <div class="skill-name">MySQL & APIs</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🚀</div>
+                        <div class="skill-name">Performance</div>
+                    </div>
+                </div>
             </div>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <i class="fab fa-html5"></i>
-                    <h3>HTML</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-css3-alt"></i>
-                    <h3>CSS</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-js"></i>
-                    <h3>JavaScript</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-react"></i>
-                    <h3>React</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-php"></i>
-                    <h3>PHP</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-symfony"></i>
-                    <h3>Symfony</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-wordpress"></i>
-                    <h3>WordPress</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-sass"></i>
-                    <h3>SCSS</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fas fa-search"></i>
-                    <h3>SEO</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fas fa-file-code"></i>
-                    <h3>jQuery</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fab fa-gulp"></i>
-                    <h3>GULP</h3>
-                </div>
-                <div class="skill-item">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Responsive</h3>
-                </div>
+
+            <div class="about-text">
+                <h3 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 2rem;">Technical Arsenal</h3>
+                <p><strong>Frontend:</strong> React, JavaScript (ES6+), HTML5, CSS3, Sass/SCSS, jQuery, Responsive Design</p>
+                <p><strong>Backend:</strong> PHP, Symfony, WordPress (Custom Themes & ACF Pro), RESTful APIs</p>
+                <p><strong>Database:</strong> MySQL, Database Design & Optimization</p>
+                <p><strong>Tools & Workflow:</strong> Git, GitHub, Gulp, Figma, Adobe Suite, SEO Optimization</p>
+                <p><strong>Specialties:</strong> Converting designs (Figma/PSD/AI) to pixel-perfect code, Custom WordPress development, Full-stack web applications</p>
             </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Work Experience</h2>
-            </div>
+    <section id="experience">
+        <div class="section-header">
+            <div class="section-label" data-translate="exp-label">Career Journey</div>
+            <h2 class="section-title" data-translate="exp-title">Professional Experience</h2>
+        </div>
 
-            <div class="timeline">
-                <div class="timeline-item right">
-                    <div class="timeline-content">
-                        <h3>AppWeb Plus</h3>
-                        <h4>Mar 2025 - Present | Freelance Full-Stack Developer</h4>
-                        <p>As a freelance developer, I build and maintain custom CMS websites, delivering full-stack solutions from client consultation to deployment.</p>
-                    </div>
-                </div>
-                <div class="timeline-item left">
-                    <div class="timeline-content">
-                        <h3>AI Dragonfly</h3>
-                        <h4>Dec 2024 - Mar 2025 | Junior Fullstack Developer</h4>
-                        <p>During my internship as a Fullstack Developer, I worked with React for building user
-                            interfaces and integrated APIs. I also helped with backend development using Symfony to
-                            create and manage APIs.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item right">
-                    <div class="timeline-content">
-                        <h3>Light My Web</h3>
-                        <h4>April 2024 - June 2024 | Web Developer/Integrator</h4>
-                        <ul>
-                            <li>Slicing and integrating AI / PSD / FIGMA mockups.</li>
-                            <li>Creating fully custom WordPress themes (100% personalized)</li>
-                            <li>Played a key role in integrating custom websites and developing manageable admin
-                                interfaces</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item left">
-                    <div class="timeline-content">
-                        <h3>Light My Web</h3>
-                        <h4>Sept 2023 - Dec 2023 | Web Developer/Integrator</h4>
-                        <ul>
-                            <li>SEO strategy and website optimization</li>
-                            <li>Expertise in web integration: converting mockups (Adobe Illustrator, Adobe XD, Sketch,
-                                Figma) into HTML, CSS, and JavaScript</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item right">
-                    <div class="timeline-content">
-                        <h3>AppWeb Plus</h3>
-                        <h4>June 2023 - Sept 2023 | Web Developer/Integrator</h4>
-                        <ul>
-                            <li>Developing SEO strategies and optimizing websites for better performance</li>
-                            <li>Cutting and integrating AI, PSD, and Figma mockups.</li>
-                            <li>Developing fully customized WordPress themes (100% tailored)</li>
-                        </ul>
-                    </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">Mar 2025 - Present</div>
+                <h3 class="timeline-company">AppWeb Plus</h3>
+                <div class="timeline-role">Freelance Full-Stack Developer</div>
+                <div class="timeline-description">
+                    As a freelance developer, I build and maintain custom CMS websites, delivering full-stack solutions from client consultation to deployment.
                 </div>
             </div>
 
-            <div class="section-title" style="margin-top: 4rem;">
-                <h2>Education</h2>
+            <div class="timeline-item">
+                <div class="timeline-date">Dec 2024 - Mar 2025</div>
+                <h3 class="timeline-company">AI Dragonfly</h3>
+                <div class="timeline-role">Fullstack Developer</div>
+                <div class="timeline-description">
+                    <ul>
+                        <li>Developed user interfaces with React and integrated APIs</li>
+                        <li>Built backend services using Symfony framework</li>
+                        <li>Collaborated on AI-powered web features</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="timeline">
-                <div class="timeline-item left">
-                    <div class="timeline-content">
-                        <h3>Advanced Technician Certificate (BTS)</h3>
-                        <h4>2022 - 2025 | Marketing and Multimedia</h4>
-                        <p>Focused on digital marketing strategies and multimedia content creation, enhancing my
-                            understanding of user experience and client needs in web development.</p>
-                    </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Apr 2024 - Jun 2024</div>
+                <h3 class="timeline-company">Light My Web</h3>
+                <div class="timeline-role">Web Developer / Integrator</div>
+                <div class="timeline-description">
+                    <ul>
+                        <li>Converted AI/PSD/Figma mockups into responsive websites</li>
+                        <li>Created 100% custom WordPress themes</li>
+                        <li>Developed manageable admin interfaces</li>
+                    </ul>
                 </div>
+            </div>
 
-                <div class="timeline-item right">
-                    <div class="timeline-content">
-                        <h3>High School Diploma</h3>
-                        <h4>2018 - 2022 | Economics and Management</h4>
-                        <p>Built a strong foundation in analytical thinking and business concepts, which helps me
-                            understand client business needs when developing websites.</p>
-                    </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Sep 2023 - Dec 2023</div>
+                <h3 class="timeline-company">Light My Web</h3>
+                <div class="timeline-role">Web Developer / Integrator</div>
+                <div class="timeline-description">
+                    <ul>
+                        <li>Implemented SEO strategies and website optimization</li>
+                        <li>Converted mockups (Adobe Illustrator, XD, Sketch, Figma) to HTML/CSS/JS</li>
+                        <li>Delivered high-quality responsive websites</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Jun 2023 - Sep 2023</div>
+                <h3 class="timeline-company">AppWeb Plus</h3>
+                <div class="timeline-role">Web Developer / Integrator</div>
+                <div class="timeline-description">
+                    <ul>
+                        <li>Developed SEO strategies for better performance</li>
+                        <li>Integrated AI, PSD, and Figma mockups</li>
+                        <li>Built fully customized WordPress themes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header" style="margin-top: 6rem;">
+            <div class="section-label">Education</div>
+            <h2 class="section-title">Academic Background</h2>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2022 - 2025</div>
+                <h3 class="timeline-company">Advanced Technician Certificate (BTS)</h3>
+                <div class="timeline-role">Marketing and Multimedia</div>
+                <div class="timeline-description">
+                    Focused on digital marketing strategies and multimedia content creation, enhancing understanding of user experience and client needs in web development.
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2018 - 2022</div>
+                <h3 class="timeline-company">High School Diploma</h3>
+                <div class="timeline-role">Economics and Management</div>
+                <div class="timeline-description">
+                    Built a strong foundation in analytical thinking and business concepts, which helps understand client business needs when developing websites.
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Projects</h2>
+    <section id="projects">
+        <div class="section-header">
+            <div class="section-label" data-translate="proj-label">Featured Work</div>
+            <h2 class="section-title" data-translate="proj-title">Selected Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="roncey-pic.PNG" alt="Laboratoires Roncey">
+                    <div class="project-overlay">
+                        <a href="https://laboratoires-roncey.com/fr/" target="_blank" class="project-link">
+                            View Live →
+                        </a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Laboratoires Roncey</h3>
+                    <p class="project-description">A fully responsive pharmaceutical laboratory website with custom admin interface and multilingual support. Built with WordPress and custom theme development.</p>
+                    <div class="project-tags">
+                        <span class="tag">WordPress</span>
+                        <span class="tag">Custom Theme</span>
+                        <span class="tag">Multilingual</span>
+                        <span class="tag">Responsive</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="roncey-pic.PNG" alt="Laboratoires Roncey Website">
-                    </div>
-                    <div class="project-info">
-                        <h3>Laboratoires Roncey</h3>
-                        <p>A fully responsive website for a pharmaceutical laboratory with custom admin interface and
-                            multilingual support.</p>
-                        <div class="project-tags">
-                            <span class="tag">WordPress</span>
-                            <span class="tag">Custom Theme</span>
-                            <span class="tag">Responsive</span>
-                            <span class="tag">Multilingual</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://laboratoires-roncey.com/fr/" target="_blank"><i
-                                    class="fas fa-external-link-alt"></i> View Live</a>
-                        </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="ja-pic.PNG" alt="Gintzburger">
+                    <div class="project-overlay">
+                        <a href="https://gintzburger.com/" target="_blank" class="project-link">
+                            View Live →
+                        </a>
                     </div>
                 </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="ja-pic.PNG" alt="Gintzburger Website">
-                    </div>
-                    <div class="project-info">
-                        <h3>Gintzburger</h3>
-                        <p>A modern e-commerce website with optimized user experience and seamless checkout process.</p>
-                        <div class="project-tags">
-                            <span class="tag">E-commerce</span>
-                            <span class="tag">WordPress</span>
-                            <span class="tag">WooCommerce</span>
-                            <span class="tag">SEO</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://gintzburger.com/" target="_blank"><i class="fas fa-external-link-alt"></i>
-                                View Live</a>
-                        </div>
+                <div class="project-content">
+                    <h3 class="project-title">Gintzburger</h3>
+                    <p class="project-description">Modern e-commerce platform with optimized user experience and seamless checkout process. Integrated WooCommerce with custom features.</p>
+                    <div class="project-tags">
+                        <span class="tag">E-commerce</span>
+                        <span class="tag">WooCommerce</span>
+                        <span class="tag">SEO</span>
+                        <span class="tag">Custom</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="ja-pic-1.PNG" alt="Joulie Avocats Website">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="ja-pic-1.PNG" alt="Joulie Avocats">
+                    <div class="project-overlay">
+                        <a href="https://www.joulieavocats.com/" target="_blank" class="project-link">
+                            View Live →
+                        </a>
                     </div>
-                    <div class="project-info">
-                        <h3>Joulie Avocats</h3>
-                        <p>A professional law firm website with elegant design and optimized content structure for
-                            better client engagement.</p>
-                        <div class="project-tags">
-                            <span class="tag">WordPress</span>
-                            <span class="tag">Custom Theme</span>
-                            <span class="tag">SEO</span>
-                            <span class="tag">Responsive</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://www.joulieavocats.com/" target="_blank"><i
-                                    class="fas fa-external-link-alt"></i> View Live</a>
-                        </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Joulie Avocats</h3>
+                    <p class="project-description">Professional law firm website with elegant design and optimized content structure for better client engagement and online presence.</p>
+                    <div class="project-tags">
+                        <span class="tag">WordPress</span>
+                        <span class="tag">Custom Theme</span>
+                        <span class="tag">SEO</span>
+                        <span class="tag">Professional</span>
                     </div>
                 </div>
             </div>
@@ -455,188 +1437,364 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Contact Me</h2>
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-label" data-translate="contact-label">Get In Touch</div>
+            <h2 class="section-title" data-translate="contact-title">Let's Create Something Amazing</h2>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <p style="font-size: 1.2rem; color: var(--clr-text-muted); margin-bottom: 3rem;" data-translate="contact-intro">
+                    Have a project in mind? I'm always open to discussing new opportunities and innovative ideas.
+                </p>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-text">
+                        <div class="contact-label" data-translate="contact-email-label">Email</div>
+                        <div class="contact-value">bejimalek137@gmail.com</div>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-text">
+                        <div class="contact-label" data-translate="contact-phone-label">Phone</div>
+                        <div class="contact-value">+216 53 695 990</div>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-text">
+                        <div class="contact-label" data-translate="contact-location-label">Location</div>
+                        <div class="contact-value">La Soukra, Tunisia</div>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/malek-beji-a76260254/" target="_blank" class="social-link">
+                        <span>in</span>
+                    </a>
+                    <a href="https://github.com" target="_blank" class="social-link">
+                        <span>gh</span>
+                    </a>
+                    <a href="mailto:bejimalek137@gmail.com" class="social-link">
+                        <span>@</span>
+                    </a>
+                </div>
             </div>
 
-            <div class="contact-container">
-                <div class="contact-form">
-                    <form action="https://formspree.io/f/xjvnqzao" method="POST">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" class="form-control" required></textarea>
-                        </div>
-                        <button id='send_message' type="submit" class="btn">Send Message</button>
-                    </form>
-                </div>
-
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+216 53 695 990</span>
+            <div class="contact-form">
+                <form action="https://formspree.io/f/xjvnqzao" method="POST">
+                    <div class="form-group">
+                        <label class="form-label" data-translate="form-name">Your Name</label>
+                        <input type="text" name="name" class="form-input" placeholder="Your name" required>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>bejimalek137@gmail.com</span>
+                    <div class="form-group">
+                        <label class="form-label" data-translate="form-email">Email Address</label>
+                        <input type="email" name="email" class="form-input" placeholder="Your email" required>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>La Soukra, Tunisie</span>
+                    <div class="form-group">
+                        <label class="form-label" data-translate="form-subject">Subject</label>
+                        <input type="text" name="subject" class="form-input" placeholder="Subject" required>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="form-label" data-translate="form-message">Message</label>
+                        <textarea name="message" class="form-textarea" placeholder="Your message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-translate="form-submit">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Malek Beji</h3>
-                    <p>Full-Stack Web Developer passionate about creating modern, high-performance web applications.</p>
-                    <div class="footer-contact">
-                        <p><i class="fas fa-envelope"></i> bejimalek137@gmail.com</p>
-                        <p><i class="fas fa-phone"></i> +216 53 695 990</p>
-                        <p><i class="fas fa-map-marker-alt"></i> La Soukra, Tunisia</p>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#cv">CV</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Tech Stack</h3>
-                    <div class="footer-tech-stack">
-                        <span class="tech-badge">React</span>
-                        <span class="tech-badge">PHP</span>
-                        <span class="tech-badge">WordPress</span>
-                        <span class="tech-badge">Symfony</span>
-                        <span class="tech-badge">JavaScript</span>
-                        <span class="tech-badge">MySQL</span>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Connect</h3>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/malek-beji-a76260254/" target="_blank" title="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://github.com" target="_blank" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="mailto:bejimalek137@gmail.com" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        <a href="tel:+21653695990" title="Phone">
-                            <i class="fas fa-phone"></i>
-                        </a>
-                    </div>
-                    <div class="footer-newsletter">
-                        <p>Ready to work together?</p>
-                        <a href="#contact" class="footer-btn">Get In Touch</a>
-                    </div>
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">Malek Beji</div>
+                <p class="footer-description" data-translate="footer-desc">Full-Stack Web Developer passionate about creating modern, high-performance web applications that make a difference.</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/malek-beji-a76260254/" target="_blank" class="social-link">in</a>
+                    <a href="https://github.com" target="_blank" class="social-link">gh</a>
+                    <a href="mailto:bejimalek137@gmail.com" class="social-link">@</a>
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <div class="footer-bottom-content">
-                    <p>&copy; 2025 Malek Beji. All Rights Reserved.</p>
-                    <div class="footer-bottom-links">
-                        <a href="cv_malek_beji-eng-ats.pdf" download>Download CV</a>
-                        <a href="#projects">View Portfolio</a>
-                    </div>
-                </div>
+            <div>
+                <h3 class="footer-title" data-translate="footer-links-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#about" data-translate="nav-about">About</a></li>
+                    <li><a href="#experience" data-translate="nav-experience">Experience</a></li>
+                    <li><a href="#projects" data-translate="nav-projects">Projects</a></li>
+                    <li><a href="#contact" data-translate="nav-contact">Contact</a></li>
+                </ul>
             </div>
+
+            <div>
+                <h3 class="footer-title" data-translate="footer-services-title">Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#projects" data-translate="footer-service-1">Web Development</a></li>
+                    <li><a href="#projects" data-translate="footer-service-2">WordPress Solutions</a></li>
+                    <li><a href="#projects" data-translate="footer-service-3">UI/UX Design</a></li>
+                    <li><a href="#projects" data-translate="footer-service-4">SEO Optimization</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div data-translate="footer-copyright">© 2025 Malek Beji. All rights reserved.</div>
+            <div data-translate="footer-credits">Designed & Built with passion</div>
         </div>
     </footer>
 
-    <!-- Floating code elements -->
-    <div class="floating-code"></></div>
-    <div class="floating-code">{ }</div>
-    <div class="floating-code">function()</div>
-    <div class="floating-code">const</div>
-    <div class="floating-code">import</div>
-
     <script>
-        // Dark Mode Toggle
-        const modeSwitch = document.querySelector('.mode-switch');
-        const body = document.body;
-
-        modeSwitch.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            // Optional: Save user preference to localStorage
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loading-screen').classList.add('hidden');
+            }, 1000);
         });
 
-        // Optional: Apply saved theme on page load
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            body.classList.add('dark-mode');
-        }
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
 
-        // Toggle mobile menu
-        document.querySelector('.hamburger').addEventListener('click', function () {
-            document.querySelector('.nav-links').classList.toggle('active');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+            cursor.style.opacity = '1';
+            
+            setTimeout(() => {
+                cursorFollower.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
+                cursorFollower.style.opacity = '1';
+            }, 50);
         });
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function () {
-                document.querySelector('.nav-links').classList.remove('active');
+        // Enlarge cursor on hover
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform += ' scale(1.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = cursor.style.transform.replace(' scale(1.5)', '');
             });
         });
 
-        // Smooth scrolling for internal links
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollTop / docHeight;
+            document.querySelector('.scroll-indicator').style.transform = `scaleX(${scrollPercent})`;
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-header, .about-text, .timeline-item, .project-card, .contact-info, .contact-form').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                window.scrollTo({
-                    top: targetElement.offsetTop - 70,
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
 
-        // Form submission (placeholder)
-        // document.querySelector('form').addEventListener('submit', function(e) {
-        //     e.preventDefault();
-        //     alert('Thank you for your message! This is a demo form - in a real website, this would send your message.');
-        //     this.reset();
-        // });
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-overlay');
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Multilingual System
+        const translations = {
+            en: {
+                // Navigation
+                'nav-about': 'About',
+                'nav-experience': 'Experience',
+                'nav-projects': 'Projects',
+                'nav-contact': 'Contact',
+                
+                // Hero Section
+                'hero-label': 'Full-Stack Web Developer',
+                'hero-title': 'Crafting Digital <span class="highlight">Experiences</span> That Matter',
+                'hero-subtitle': 'Transforming ideas into elegant, high-performance web solutions with precision and creativity.',
+                'badge-label': 'Open To',
+                'badge-value': 'Opportunities',
+                'cta-hire': 'Hire Me',
+                'cta-projects': 'View Projects',
+                
+                // About Section
+                'about-label': 'Who I Am',
+                'about-title': 'Building the Web, One Line at a Time',
+                'about-p1': "I'm a Full-Stack Web Developer passionate about creating beautiful, functional, and user-centered digital experiences.",
+                'about-p2': 'With expertise spanning front-end and back-end technologies, I specialize in transforming complex ideas into elegant solutions. From responsive interfaces to robust APIs, I deliver complete web experiences that drive results.',
+                'about-p3': 'My approach combines technical excellence with creative problem-solving, ensuring every project not only meets requirements but exceeds expectations.',
+                
+                // Experience Section
+                'exp-label': 'Career Journey',
+                'exp-title': 'Professional Experience',
+                
+                // Projects Section
+                'proj-label': 'Featured Work',
+                'proj-title': 'Selected Projects',
+                
+                // Contact Section
+                'contact-label': 'Get In Touch',
+                'contact-title': "Let's Create Something Amazing",
+                'contact-intro': "Have a project in mind? I'm always open to discussing new opportunities and innovative ideas.",
+                'contact-email-label': 'Email',
+                'contact-phone-label': 'Phone',
+                'contact-location-label': 'Location',
+                'form-name': 'Your Name',
+                'form-email': 'Email Address',
+                'form-subject': 'Subject',
+                'form-message': 'Message',
+                'form-submit': 'Send Message',
+                
+                // Footer
+                'footer-desc': 'Full-Stack Web Developer passionate about creating modern, high-performance web applications that make a difference.',
+                'footer-links-title': 'Quick Links',
+                'footer-services-title': 'Services',
+                'footer-service-1': 'Web Development',
+                'footer-service-2': 'WordPress Solutions',
+                'footer-service-3': 'UI/UX Design',
+                'footer-service-4': 'SEO Optimization',
+                'footer-copyright': '© 2025 Malek Beji. All rights reserved.',
+                'footer-credits': 'Designed & Built with passion'
+            },
+            fr: {
+                // Navigation
+                'nav-about': 'À Propos',
+                'nav-experience': 'Expérience',
+                'nav-projects': 'Projets',
+                'nav-contact': 'Contact',
+                
+                // Hero Section
+                'hero-label': 'Développeur Web Full-Stack',
+                'hero-title': 'Créer des Expériences <span class="highlight">Numériques</span> Qui Comptent',
+                'hero-subtitle': 'Transformer les idées en solutions web élégantes et performantes avec précision et créativité.',
+                'badge-label': 'Ouvert Aux',
+                'badge-value': 'Opportunités',
+                'cta-hire': 'Recrutez-Moi',
+                'cta-projects': 'Voir Projets',
+                
+                // About Section
+                'about-label': 'Qui Je Suis',
+                'about-title': 'Construire le Web, Une Ligne à la Fois',
+                'about-p1': "Je suis un Développeur Web Full-Stack passionné par la création d'expériences numériques belles, fonctionnelles et centrées sur l'utilisateur.",
+                'about-p2': "Avec une expertise couvrant les technologies front-end et back-end, je me spécialise dans la transformation d'idées complexes en solutions élégantes. Des interfaces responsives aux API robustes, je livre des expériences web complètes qui génèrent des résultats.",
+                'about-p3': "Mon approche combine l'excellence technique avec la résolution créative de problèmes, garantissant que chaque projet non seulement répond aux exigences mais dépasse les attentes.",
+                
+                // Experience Section
+                'exp-label': 'Parcours Professionnel',
+                'exp-title': 'Expérience Professionnelle',
+                
+                // Projects Section
+                'proj-label': 'Travaux Sélectionnés',
+                'proj-title': 'Projets Choisis',
+                
+                // Contact Section
+                'contact-label': 'Prenons Contact',
+                'contact-title': 'Créons Quelque Chose d\'Incroyable',
+                'contact-intro': "Vous avez un projet en tête ? Je suis toujours ouvert à discuter de nouvelles opportunités et d'idées innovantes.",
+                'contact-email-label': 'Email',
+                'contact-phone-label': 'Téléphone',
+                'contact-location-label': 'Localisation',
+                'form-name': 'Votre Nom',
+                'form-email': 'Adresse Email',
+                'form-subject': 'Sujet',
+                'form-message': 'Message',
+                'form-submit': 'Envoyer Message',
+                
+                // Footer
+                'footer-desc': 'Développeur Web Full-Stack passionné par la création d\'applications web modernes et performantes qui font la différence.',
+                'footer-links-title': 'Liens Rapides',
+                'footer-services-title': 'Services',
+                'footer-service-1': 'Développement Web',
+                'footer-service-2': 'Solutions WordPress',
+                'footer-service-3': 'Design UI/UX',
+                'footer-service-4': 'Optimisation SEO',
+                'footer-copyright': '© 2025 Malek Beji. Tous droits réservés.',
+                'footer-credits': 'Conçu & Développé avec passion'
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('preferredLang', lang);
+            
+            // Update button text
+            const langButton = document.querySelector('.lang-toggle');
+            langButton.textContent = lang === 'en' ? 'EN / FR' : 'FR / EN';
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Update form placeholders
+            if (lang === 'fr') {
+                document.querySelector('input[name="name"]').placeholder = 'Votre nom';
+                document.querySelector('input[name="email"]').placeholder = 'Votre email';
+                document.querySelector('input[name="subject"]').placeholder = 'Sujet';
+                document.querySelector('textarea[name="message"]').placeholder = 'Votre message';
+            } else {
+                document.querySelector('input[name="name"]').placeholder = 'Your name';
+                document.querySelector('input[name="email"]').placeholder = 'Your email';
+                document.querySelector('input[name="subject"]').placeholder = 'Subject';
+                document.querySelector('textarea[name="message"]').placeholder = 'Your message';
+            }
+        }
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'en' ? 'fr' : 'en';
+            setLanguage(newLang);
+        }
+
+        // Initialize language from localStorage or default to English
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'en';
+            setLanguage(savedLang);
+        });
     </script>
 </body>
-
 </html>

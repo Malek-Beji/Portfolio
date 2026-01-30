@@ -1,0 +1,174 @@
+/* Responsive Styles */
+
+@media (max-width: 992px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+
+        .header-text {
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        .profile-img {
+            margin-top: 2rem;
+        }
+    }
+
+    .timeline {
+        &::after {
+            left: 31px;
+        }
+
+        .timeline-item {
+            width: 100%;
+            padding-left: 70px;
+            padding-right: 25px;
+
+            &::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 0 10px 10px;
+                border-color: transparent transparent transparent white;
+            }
+
+            &::after {
+                left: 24px;
+            }
+
+            &.right {
+                left: 0%;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: var(--background-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+
+            &.active {
+                display: flex;
+            }
+
+            li {
+                margin: 0.5rem 0;
+            }
+        }
+
+        .mode-switch,
+        .language-switcher {
+            margin-left: auto;
+            margin-right: 1rem;
+        }
+
+        .hamburger {
+            display: block;
+        }
+    }
+
+    .header-content {
+        padding-top: 4rem;
+
+        .header-text {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        .profile-img img {
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    #about .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    #projects .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-container {
+        flex-direction: column;
+        .contact-form,
+        .contact-info {
+            flex: 1 1 100%;
+        }
+    }
+
+    footer .footer-bottom .footer-bottom-content {
+        flex-direction: column;
+        gap: 1rem;
+
+        .footer-bottom-links {
+            a {
+                margin: 0 0.5rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        .logo {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-content {
+        .header-text h1 {
+            font-size: 2rem;
+        }
+
+        .header-text h2 {
+            font-size: 1.2rem;
+        }
+
+        .profile-img img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+    .timeline .timeline-item {
+        padding-left: 60px;
+
+        &::after {
+            left: 20px;
+        }
+    }
+
+    #about .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+}
