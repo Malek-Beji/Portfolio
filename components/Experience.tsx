@@ -19,7 +19,7 @@ export default function Experience() {
           transition={{ duration: 0.5 }}
         >
           <p className="font-mono text-sm text-accent2">{sectionTitles.experience.eyebrow[locale]}</p>
-          <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">
+          <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
             {sectionTitles.experience.title[locale]}
           </h2>
         </motion.div>

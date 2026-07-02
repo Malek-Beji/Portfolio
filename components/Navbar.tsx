@@ -55,7 +55,7 @@ export default function Navbar() {
           <a
             href={`#contact`}
             data-cursor-hover
-            className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-bg transition-transform hover:scale-105"
+            className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-105"
           >
             {nav.contact[locale]}
           </a>

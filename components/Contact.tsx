@@ -24,7 +24,7 @@ export default function Contact() {
           transition={{ duration: 0.5 }}
         >
           <p className="font-mono text-sm text-accent2">{contact.eyebrow[locale]}</p>
-          <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">
+          <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
             {contact.title[locale]}
           </h2>
           <p className="mt-4 max-w-xl leading-relaxed text-muted">{contact.intro[locale]}</p>
@@ -97,33 +97,33 @@ export default function Contact() {
                 name="name"
                 required
                 placeholder={contact.form.name[locale]}
-                className="rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
+                className="rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/40"
               />
               <input
                 type="email"
                 name="email"
                 required
                 placeholder={contact.form.email[locale]}
-                className="rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
+                className="rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/40"
               />
             </div>
             <input
               type="text"
               name="subject"
               placeholder={contact.form.subject[locale]}
-              className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
+              className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/40"
             />
             <textarea
               name="message"
               required
               rows={5}
               placeholder={contact.form.message[locale]}
-              className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
+              className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/40"
             />
             <button
               type="submit"
               data-cursor-hover
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-glow transition-transform hover:scale-105"
             >
               {contact.form.submit[locale]}
               <Send size={16} />

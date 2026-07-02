@@ -10,16 +10,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#0a0a0a",
-        surface: "#121212",
-        surface2: "#161616",
-        border: "#232323",
-        accent: "#00ff88",
-        accent2: "#ff6b35",
-        muted: "#9a9a9a",
+        bg: "#0b0b14",
+        surface: "#13131f",
+        surface2: "#191927",
+        border: "#26263a",
+        accent: "#6c5ce7",
+        accent2: "#22d3ee",
+        muted: "#9694a8",
       },
       fontFamily: {
-        display: ["var(--font-playfair)", "serif"],
+        display: ["var(--font-outfit)", "sans-serif"],
         sans: ["var(--font-outfit)", "sans-serif"],
         mono: ["var(--font-jetbrains)", "monospace"],
       },
@@ -32,10 +32,19 @@ const config: Config = {
           "0%, 100%": { opacity: "0.6" },
           "50%": { opacity: "1" },
         },
+        "mesh-pan": {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "50%": { transform: "translate(-3%, 2%) scale(1.05)" },
+        },
       },
       animation: {
         float: "float 6s ease-in-out infinite",
         glow: "glow 3s ease-in-out infinite",
+        "mesh-pan": "mesh-pan 14s ease-in-out infinite",
+      },
+      boxShadow: {
+        glow: "0 0 40px -8px rgba(108, 92, 231, 0.45)",
+        "glow-cyan": "0 0 40px -8px rgba(34, 211, 238, 0.4)",
       },
     },
   },
