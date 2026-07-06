@@ -1,18 +1,48 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
 import { contact, siteMeta } from "@/data/content";
 
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
   const { locale } = useLocale();
+  const [status, setStatus] = useState<Status>("idle");
 
   const infoCards = [
     { icon: Mail, label: contact.emailLabel[locale], value: siteMeta.email, href: `mailto:${siteMeta.email}` },
     { icon: Phone, label: contact.phoneLabel[locale], value: siteMeta.phone, href: `tel:${siteMeta.phone.replace(/\s/g, "")}` },
     { icon: MapPin, label: contact.locationLabel[locale], value: siteMeta.location[locale], href: undefined },
   ];
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    setStatus("sending");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          email: data.get("email"),
+          subject: data.get("subject"),
+          message: data.get("message"),
+        }),
+      });
+
+      if (!res.ok) throw new Error("Request failed");
+      setStatus("success");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <section id="contact" className="relative py-28">
@@ -83,8 +113,7 @@ export default function Contact() {
           </motion.div>
 
           <motion.form
-            action={siteMeta.formspree}
-            method="POST"
+            onSubmit={handleSubmit}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
@@ -120,14 +149,40 @@ export default function Contact() {
               placeholder={contact.form.message[locale]}
               className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent/40"
             />
-            <button
-              type="submit"
-              data-cursor-hover
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-glow transition-transform hover:scale-105"
-            >
-              {contact.form.submit[locale]}
-              <Send size={16} />
-            </button>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                data-cursor-hover
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-glow transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
+              >
+                {status === "sending" ? (
+                  <>
+                    {contact.form.sending[locale]}
+                    <Loader2 size={16} className="animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    {contact.form.submit[locale]}
+                    <Send size={16} />
+                  </>
+                )}
+              </button>
+
+              {status === "success" && (
+                <span className="flex items-center gap-2 text-sm text-accent2">
+                  <CheckCircle2 size={16} />
+                  {contact.form.success[locale]}
+                </span>
+              )}
+              {status === "error" && (
+                <span className="flex items-center gap-2 text-sm text-red-400">
+                  <XCircle size={16} />
+                  {contact.form.error[locale]}
+                </span>
+              )}
+            </div>
           </motion.form>
         </div>
       </div>

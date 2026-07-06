@@ -8,7 +8,6 @@ export const siteMeta = {
   github: "https://github.com/Malek-Beji",
   linkedin: "https://www.linkedin.com/in/malek-beji-a76260254/",
   resume: "/cv-malek-beji-ats-eng.pdf",
-  formspree: "https://formspree.io/f/xjvnqzao",
 };
 
 type Dict = Record<Locale, string>;
@@ -90,6 +89,9 @@ export const contact = {
     subject: { en: "Subject", fr: "Sujet" },
     message: { en: "Your Message", fr: "Votre message" },
     submit: { en: "Send Message", fr: "Envoyer le message" },
+    sending: { en: "Sending...", fr: "Envoi en cours..." },
+    success: { en: "Message sent! I'll get back to you soon.", fr: "Message envoyé ! Je vous répondrai rapidement." },
+    error: { en: "Something went wrong. Please try again or email me directly.", fr: "Une erreur est survenue. Réessayez ou écrivez-moi directement." },
   },
 };
 
