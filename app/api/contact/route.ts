@@ -31,10 +31,11 @@ export async function POST(request: NextRequest) {
       to: TO_EMAIL,
       replyTo: email,
       subject: subject ? `[Portfolio] ${subject}` : `[Portfolio] New message from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject || "(none)"}\n\n${message}`,
       html: `
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject || "(none)"}</p>
         <p><strong>Message:</strong></p>
         <p>${String(message).replace(/\n/g, "<br/>")}</p>
       `,
