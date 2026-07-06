@@ -36,11 +36,16 @@ const config: Config = {
           "0%, 100%": { transform: "translate(0, 0) scale(1)" },
           "50%": { transform: "translate(-3%, 2%) scale(1.05)" },
         },
+        blink: {
+          "0%, 49%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
       },
       animation: {
         float: "float 6s ease-in-out infinite",
         glow: "glow 3s ease-in-out infinite",
         "mesh-pan": "mesh-pan 14s ease-in-out infinite",
+        blink: "blink 1s steps(1) infinite",
       },
       boxShadow: {
         glow: "0 0 40px -8px rgba(108, 92, 231, 0.45)",

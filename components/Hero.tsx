@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Download, MapPin } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
 import { hero, siteMeta } from "@/data/content";
+import Terminal from "@/components/Terminal";
 
 export default function Hero() {
   const { locale } = useLocale();
@@ -96,9 +97,8 @@ export default function Hero() {
               <div className="mt-1 text-xs leading-snug text-muted">{stat.label[locale]}</div>
             </div>
           ))}
-          <div className="glass-card col-span-2 flex flex-col justify-center rounded-2xl p-5 text-left sm:col-span-4">
-            <p className="font-mono text-xs text-accent2">Next.js · React · Flutter</p>
-            <p className="mt-1 font-mono text-xs text-muted">Claude · OpenAI · LangChain</p>
+          <div className="col-span-2 sm:col-span-4">
+            <Terminal />
           </div>
         </motion.div>
       </div>
