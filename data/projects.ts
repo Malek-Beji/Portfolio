@@ -87,4 +87,24 @@ export const projects: Project[] = [
     },
     tags: ["WordPress", "Custom Theme", "SEO", "Professional"],
   },
+  {
+    title: "Capricieuse",
+    url: "https://www.capricieuse.shop/",
+    image: "/capricieuse.png",
+    description: {
+      en: "Native PHP e-commerce platform for a Tunisian modest-fashion brand, built from scratch with a custom MVC architecture (no framework): product catalog, cart, checkout, wishlist, customer accounts, discounts, and an admin back-office.",
+      fr: "Plateforme e-commerce en PHP natif pour une marque tunisienne de mode pudique, développée de A à Z avec une architecture MVC sur mesure (sans framework) : catalogue produits, panier, checkout, wishlist, comptes clients, promotions et back-office admin.",
+    },
+    tags: ["Custom PHP", "MVC Architecture", "E-commerce", "MySQL", "Admin Dashboard"],
+  },
+  {
+    title: "ServiHealth",
+    url: "https://servihealth.net/",
+    image: "/servihealth.png",
+    description: {
+      en: "Medical tourism platform for a cosmetic surgery agency in Tunisia, built on a custom WordPress theme with a 6-language setup (FR/EN/AR/IT/DE/ES), quote request forms, and SEO-optimized content for international patients.",
+      fr: "Plateforme de tourisme médical pour une agence de chirurgie esthétique en Tunisie, développée sur un thème WordPress sur mesure avec un site en 6 langues (FR/EN/AR/IT/DE/ES), formulaires de devis et contenu optimisé SEO pour une patientèle internationale.",
+    },
+    tags: ["WordPress", "Custom Theme", "Multilingual", "SEO", "Healthcare"],
+  },
 ];

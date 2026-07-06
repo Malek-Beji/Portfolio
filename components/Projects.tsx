@@ -17,6 +17,8 @@ const layout = [
   { span: "lg:col-span-6", aspect: "aspect-[21/9]" },
   { span: "lg:col-span-3", aspect: "aspect-[4/3]" },
   { span: "lg:col-span-3", aspect: "aspect-[4/3]" },
+  { span: "lg:col-span-4", aspect: "aspect-[16/9]" },
+  { span: "lg:col-span-2", aspect: "aspect-[4/5]" },
 ];
 
 export default function Projects() {
